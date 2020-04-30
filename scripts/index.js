@@ -1,242 +1,127 @@
-/*
-Notes:
-'data' is lazily imported from the html
-'seedrandom' is also imported from html. it gives deterministic random #s based on a seed set in fire()
-*/
 
+const NUMBER_OF_WORDS = 25;
+const CIVILIAN_COUNT = 7
+const ASSASSIN_COUNT = 1
+const RED = 'red-square'
+const BLUE = 'blue-square'
+const CIVILIAN = 'civilian-square'
+const ASSASSIN = 'assassin-square'
+const SELECTED = 'selected'
+const SPYMASTER = 'spy-master'
+const $board = $('#board');
+const $seed = $('#seed');
 
-var wordsSelected = [];
-var teams = [];
-var NUMBER_OF_WORDS = 25;
-var spyMasterMode = false;
-var sessionData = [];
-var customData = [];
+const $spymaster = $("#spymaster")
+const $redScore = $('#redScore')
+const $blueScore = $('#blueScore')
+const $reset =$('#reset')
 
-var RED_SQUARE = '.red-square';
-var BLUE_SQUARE = '.blue-square';
+const ICONS = {
+  [RED] : 'fa-user-secret',
+  [BLUE] : 'fa-user-secret',
+  [CIVILIAN] : 'fa-walking',
+  [ASSASSIN] : 'fa-skull-crossbones'
+}
 
-var COLOR_RED = "#ff8a65";
-var COLOR_RED_RGB = 'rgb(255, 138, 101)';
-var COLOR_BLUE = "#26a69a";
-var COLOR_BLUE_RGB = 'rgb(38, 166, 154)';
+var answers = {};
 
-var COLOR_YELLOW = "#cfd8dc";
-var COLOR_BLACK = "#d50000";
-var COLOR_GREEN = "#009000";
+$seed.val(Math.floor(Math.random() * 1000));
+createGame();
 
-//init
-$("#seed").keyup(function() {
-	fire();
+function createGame() {
+  $board.empty();
+  const seed = $seed.val();
+  const wordList = seededShuffle(defaultData.slice(0), seed).slice(0, NUMBER_OF_WORDS);
+
+  const evenSeed = (seed % 2) === 0
+  const redCount = evenSeed ? 9 : 8;
+  const blueCount = evenSeed ? 8 : 9;
+
+  const labelArray = [
+    Array(redCount).fill(RED),
+    Array(blueCount).fill(BLUE),
+    Array(CIVILIAN_COUNT).fill(CIVILIAN),
+    Array(ASSASSIN_COUNT).fill(ASSASSIN)
+  ].flat()
+
+  const shuffledLabels = seededShuffle(labelArray, seed)
+
+  // populate answers
+  for(var i = 0; i < wordList.length; i += 1) {
+    answers[wordList[i]] = shuffledLabels[i];
+  }
+
+  wordList.forEach((word) => {
+    const type = answers[word]
+    const square = `<div class="js-word word ${type}" id='${word}'><div><i class="icon fas ${ICONS[type]}"></i><a href="#"><span class="ada"></span>${word}</a></div></div>`
+
+    $board.append(square);
+  });
+
+  updateScore();
+
+}
+
+$(document).on('dblclick', '.js-word', function() {
+  $(this).addClass(SELECTED);
+  updateScore();
 });
 
-$("#gameMode").change(function() {
-	fire();
+$spymaster.on('click', function (){
+  $board.toggleClass(SPYMASTER)
 });
 
-
-$("#seed").val(Math.floor(Math.random() * 1000));
-fire();
-
-function fire() {
-	//get seed and set the seed for randomizer
-	var seed = document.getElementById("seed").value;
-	Math.seedrandom(seed.toLowerCase());
-
-	var option = $('#gameMode :selected').val();
-	switch (option) {
-		case 'spanish':
-			sessionData = spanishData.slice(0);
-			break;
-		case '2knouns':
-			sessionData = data.slice(0);
-			break;
-		case 'movies':
-			sessionData = movieData.slice(0);
-			break;
-		case 'custom':
-			if (customData.length === 0) {
-				var customWordList = prompt("Please enter custom word list. The list will be saved until your refresh your browser. (The words MUST be delimanted by spaces). eg: cat dog mouse", "Enter words here");
-				customData = customWordList.split(' ');
-			}
-			sessionData = customData.slice(0);
-			break;
-		default:
-			sessionData = defaultData.slice(0);
-	}
-
-	wordsSelected = [];
-	teams = [];
-	spyMasterMode = false;
-	document.getElementById("board").innerHTML = "";
-
-	//fire new board
-	updateScore();
-	createNewGame();
-}
-
-//not used, but probably useful at some point
-function removeItem(array, index) {
-	if (index > -1) {
-		// console.log("index: " + index + ", word: " + array[index] + " removed.");
-		array.splice(index, 1);
-	}
-}
-
-function createNewGame() {
-	var trs = [];
-	for (var i = 0; i < NUMBER_OF_WORDS; i++) {
-		if (!trs[i % 5]) {
-			trs[i % 5] = "";
-		}
-		var randomNumber = Math.floor(Math.random() * sessionData.length);
-		var word = sessionData[randomNumber];
-		removeItem(sessionData, randomNumber);
-		wordsSelected.push(word);
-		trs[i % 5] += "<div class=\"word\" id=\'" + i + "\' onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
-	}
-	//<a href="#"><span class="ada">Washington stimulates economic growth </span>Read me</a>
-	for (var i = 0; i < trs.length; i++) {
-		document.getElementById("board").innerHTML += '<div class="row">' + trs[i] + '</div>'
-	}
-
-	//create teams
-	for (var i = 0; i < 8; i++) {
-		teams.push(COLOR_RED);
-		teams.push(COLOR_BLUE);
-	}
-
-	// one extra for one of the teams
-	if (Math.floor(Math.random() * data.length) % 2 === 0) {
-		teams.push(COLOR_RED);
-		// document.getElementById("team").style.color = COLOR_RED;
-		// document.getElementById("team").innerHTML = "RED";
-		// $('#board').addClass('redStarts').removeClass('blueStarts');
-
-	} else {
-		teams.push(COLOR_BLUE);
-		// document.getElementById("team").style.color = COLOR_BLUE;
-		// document.getElementById("team").innerHTML = "BLUE";
-		// $('#board').addClass('blueStarts').removeClass('redStarts');
-	}
-
-	// add neturals
-	for (var i = 0; i < 7; i++) {
-		teams.push(COLOR_YELLOW);
-	}
-
-	// push the assasin
-	teams.push(COLOR_BLACK)
-
-	//shuffle teams
-	shuffle(teams);
-
-	updateScore();
-}
-
-function clicked(value) {
-	if (spyMasterMode) {
-		//spymaster mode
-		document.getElementById(value).style.backgroundColor = COLOR_GREEN;
-	} else {
-		//guessers mode
-		var word = wordsSelected[value];
-		if (document.getElementById("confirm").checked) {
-			if (window.confirm("Are sure you want to select '" + word + "'?")) {
-				document.getElementById(value).style.backgroundColor = teams[value];
-				if (teams[value] == "black") {
-					document.getElementById(value).style.color = "white";
-				}
-			}
-		} else {
-			document.getElementById(value).style.backgroundColor = teams[value];
-			if (teams[value] == "black") {
-				document.getElementById(value).style.color = "white";
-			}
-		}
-	}
-	updateScore();
-}
+$reset.on('click', function(){
+  createGame();
+});
 
 function updateScore() {
-	var blueScore = 9;
-	var redScore = 9;
-	if (spyMasterMode) {
-		blueScore = 0;
-		redScore = 0;
-		$('div.word').each(function() {
-			var color = $(this).css('background-color');
-			if (color === COLOR_BLUE_RGB) {
-				blueScore++;
-			}
-			if (color === COLOR_RED_RGB) {
-				redScore++;
-			}
-		});
-	} else {
-		$('div.word').each(function() {
-			var color = $(this).css('background-color');
-			if (color === COLOR_BLUE_RGB) {
-				blueScore--;
-			}
-			if (color === COLOR_RED_RGB) {
-				redScore--;
-			}
-		});
+  const redLeft = leftForColor(RED)
+  const blueLeft = leftForColor(BLUE)
 
-		if ($('.redStarts').length === 1) {
-			blueScore--;
-		} else {
-			redScore--;
-		}
-	}
-	$('#redScore').text(redScore + ' left');
-	$('#blueScore').text(blueScore + ' left');
-	if(redScore === 0){
-		$('#redScore').text('Winner!');
-	}
-	if(blueScore === 0){
-		$('#blueScore').text('Winner!');
-	}
+  $redScore.text(scoreText(redLeft));
+  $blueScore.text(scoreText(blueLeft));
 }
 
-function spyMaster() {
-	//TODO: randomize or organize tiles for easier comparing
-	spyMasterMode = true;
-	for (var i = 0; i < NUMBER_OF_WORDS; i++) {
-		document.getElementById(i).style.backgroundColor = teams[i];
-		if (teams[i] == "black") {
-			document.getElementById(i).style.color = "white";
-		}
-	}
+function leftForColor(color) {
+  return $("." + color).length - $("." + color + "." + SELECTED).length
 }
 
-function shuffle(array) {
-	var currentIndex = array.length,
-		temporaryValue, randomIndex;
-
-	// While there remain elements to shuffle...
-	while (0 !== currentIndex) {
-
-		// Pick a remaining element...
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
-
-		// And swap it with the current element.
-		temporaryValue = array[currentIndex];
-		array[currentIndex] = array[randomIndex];
-		array[randomIndex] = temporaryValue;
-	}
-
-	return array;
+function scoreText(score) {
+  return score === 0 ? 'Winner!' : score + ' left'
 }
 
 //enable pressing 'Enter' on seed field
-document.getElementById('seed').onkeypress = function(e) {
-	if (!e) e = window.event;
-	var keyCode = e.keyCode || e.which;
-	if (keyCode == '13') {
-		// Enter pressed
-		fire();
-		return false;
-	}
+$seed.on('keyup', function(e) {
+  if (!e) e = window.event;
+  var keyCode = e.keyCode || e.which;
+  if (keyCode == '13') {
+    // Enter pressed
+    createGame();
+    return false;
+  }
+});
+
+// copied from here: https://github.com/yixizhang/seed-shuffle
+// edited so it doesn't mutate the original array
+function seededShuffle(arrayInput, seed) {
+  // clone array
+  var array = Object.assign([], arrayInput);
+  let currentIndex = array.length, temporaryValue, randomIndex;
+  seed = seed || 1;
+  let random = function() {
+    var x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+  };
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 }
