@@ -17,10 +17,10 @@ const $blueScore = $('#blueScore')
 const $reset =$('#reset')
 
 const ICONS = {
-  [RED] : 'fa-user-secret',
-  [BLUE] : 'fa-user-secret',
-  [CIVILIAN] : 'fa-walking',
-  [ASSASSIN] : 'fa-skull-crossbones'
+  [RED] : ['fa-user-secret'],
+  [BLUE] : ['fa-user-secret'],
+  [CIVILIAN] : ['fa-walking', 'fa-person-booth', 'fa-snowboarding', 'fa-hiking', 'fa-skiing', 'fa-user-nurse', 'fa-user-md', 'fa-blind', 'fa-user-injured', 'fa-user-graduate', 'fa-biking', 'fa-child', 'fa-user-astronaut', 'fa-user-tie', 'fa-people-carry'],
+  [ASSASSIN] : ['fa-skull-crossbones']
 }
 
 var answers = {};
@@ -51,9 +51,10 @@ function createGame() {
     answers[wordList[i]] = shuffledLabels[i];
   }
 
-  wordList.forEach((word) => {
+  wordList.forEach((word, index) => {
     const type = answers[word]
-    const square = `<div class="js-word word ${type}" id='${word}'><div><i class="icon fas ${ICONS[type]}"></i><a href="#"><span class="ada"></span>${word}</a></div></div>`
+    const icon = ICONS[type][index % ICONS[type].length]
+    const square = `<div class="js-word word ${type}" id='${word}'><div><i class="icon fas ${icon}"></i><a href="#"><span class="ada"></span>${word}</a></div></div>`
 
     $board.append(square);
   });
