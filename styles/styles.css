@@ -231,7 +231,7 @@ button, input, span#first {
 
 	@media (orientation: portrait) {
 		body {
-			background-color: #fff9c4;
+			background-color: #e0f2f1;
 		}
 		#board {
 			display: none;
@@ -265,8 +265,9 @@ button, input, span#first {
 			margin: 20px 0;
 		}
 		.mobile-form .mobile-submit {
-			background-color: #01579b;
+			background-color: #26a69a;
 			border-radius : 5px;
+			margin: 10px auto;
 			color: white;
 			padding: 20px;
 			width: 200px;
@@ -291,12 +292,9 @@ button, input, span#first {
 		.mobile-rotate .score {
 			font-size: 8vw;
 		}
-		.mobile-rotate .game-number-header {
-			margin-top: 40px;
-		}
 
 		.mobile-rotate .change-game {
-			background-color: #01579b;
+			background-color: #26a69a;
 			border-radius : 5px;
 			margin: 10px auto;
 			color: white;
