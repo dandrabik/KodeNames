@@ -38,8 +38,6 @@ button, input, span#first {
   transform: translate(-50%, 0);
 	font-size: 0.8em;
 	color:black;
-
-}
 }
 #board .word.selected a:hover {
 	opacity: 0.6;
@@ -207,7 +205,7 @@ button, input, span#first {
 		margin: 0;
 	}
 	#board div.word {
-		border : none; /*#e65100*/
+		border : none;
 		border-radius : 0;
 		width : 20%;
 		height : 20%;
@@ -219,13 +217,13 @@ button, input, span#first {
 	#board {
 		margin: 0;
 		padding: 0;
-		width: 100%;
+		width: 99.9%;
 		position : absolute;
 		left : 0;
 		right : 0;
 		height : 100%;
 		top : 0;
-		font-size : 3vw;
+		font-size : 2.5vw;
 	}
 	#header {
 		display: none;
@@ -239,21 +237,29 @@ button, input, span#first {
 			display: none;
 		}
 		.mobile-form {
-			padding: 20px;
-
+			margin: 0 auto;
+			padding: 20px auto;
 			display: block;
-			position: absolute;
-			width: 95%;
-			height: 95%;
+			text-align: center;
+
 		}
-		.mobile-form input {
+		.mobile-form input.mobile-text-field {
 			width: 200px;
-			height: 40px;
+			height: 50px;
+			margin: 10px auto;
+			display: block;
+			font: 6vw;
+		}
+		.mobile-form input.mobile-checkbox {
+			width: 30px;
+			height: 30px;
 		}
 		.mobile-form label {
 			display: inline;
-			height: 40px;
+			font-size: 5vw;
 			margin-right: 20px;
+			vertical-align: center;
+			padding-bottom: 5px;
 		}
 		.mobile-form .form-section {
 			margin: 20px 0;
@@ -261,12 +267,13 @@ button, input, span#first {
 		.mobile-form .mobile-submit {
 			background-color: #01579b;
 			border-radius : 5px;
-			width: 80%;
 			color: white;
+			padding: 20px;
+			width: 200px;
 		}
 		.mobile-rotate {
 			text-align: center;
-			padding: 20px;
+			padding: 30px;
 		}
 		.mobile-rotate .rotate-icon {
 			display: block;
@@ -284,16 +291,16 @@ button, input, span#first {
 		.mobile-rotate .score {
 			font-size: 8vw;
 		}
+		.mobile-rotate .game-number-header {
+			margin-top: 60px;
+		}
 
 		.mobile-rotate .change-game {
 			background-color: #01579b;
 			border-radius : 5px;
 			margin: 10px auto;
-/*			bottom: 20px;
-			right: 20px;*/
-			margin-top: 50px;
 			color: white;
-			height: 40px;
+			padding: 20px;
 		}
 
 	}

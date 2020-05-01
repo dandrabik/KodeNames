@@ -39,11 +39,11 @@
       <h2> Kode Names </h2>
       <div class='form-section'>
         <label>Game Number</label>
-        <input type="number" id="game" name="game" class="mobile-text-field">
+        <input type="number" id="game" name="game" pattern="[0-9]*" class="mobile-text-field">
       </div>
       <div class='form-section'>
         <label for="spy"> I am the spymaster</label>
-        <input type="checkbox" id="spy" name="spy" value="true" checked="true">
+        <input type="checkbox" id="spy" name="spy" value="true" checked="true" class="mobile-checkbox">
       </div>
       <div class='form-section'>
         <input type="submit" name="submit" value='Enter' class='mobile-submit'>
@@ -53,11 +53,13 @@
     </form>
     <div class='mobile-rotate hidden'>
       <p>Rotate sideways to see game</p>
-      <i class="rotate-icon fas fa-undo"></i>
-      <div class="team-name red">Orange Team: </div>
+      <i class="rotate-icon fas fa-undo fa-flip-horizontal"></i>
+      <div class="team-name red">Orange Team:</div>
       <div class="redScore score"></div>
-      <div class="team-name blue">Green Team: </div>
+      <div class="team-name blue">Green Team:</div>
       <div class="blueScore score"></div>
+      <div class="game-number-header">Current Game Number:</div>
+      <div class="js-game-number score"></div>
       <button class="change-game js-change-game">New Game</button>
     </div>
   </div>

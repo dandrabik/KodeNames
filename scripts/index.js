@@ -82,6 +82,7 @@ $(document).on('submit', '.js-mobile-form', function (event) {
     createGame(seed);
     $('.js-mobile-form').hide()
     $('.mobile-rotate').show()
+    $('.js-game-number').html(seed)
   }
 });
 
