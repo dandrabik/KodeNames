@@ -12,8 +12,8 @@ const $board = $('#board');
 const $seed = $('#seed');
 
 const $spymaster = $("#spymaster")
-const $redScore = $('#redScore')
-const $blueScore = $('#blueScore')
+const $redScore = $('.redScore')
+const $blueScore = $('.blueScore')
 const $reset =$('#reset')
 
 const ICONS = {
@@ -26,13 +26,13 @@ const ICONS = {
 var answers = {};
 
 $seed.val(Math.floor(Math.random() * 1000));
-createGame();
+const initialSeed = $seed.val();
+createGame(initialSeed);
 
-function createGame() {
+function createGame(seed) {
   $board.empty();
-  const seed = $seed.val();
-  const wordList = seededShuffle(defaultData.slice(0), seed).slice(0, NUMBER_OF_WORDS);
 
+  const wordList = seededShuffle(defaultData.slice(0), seed).slice(0, NUMBER_OF_WORDS);
   const evenSeed = (seed % 2) === 0
   const redCount = evenSeed ? 9 : 8;
   const blueCount = evenSeed ? 8 : 9;
@@ -68,12 +68,36 @@ $(document).on('dblclick', '.js-word', function() {
   updateScore();
 });
 
+$(document).on('submit', '.js-mobile-form', function (event) {
+  event.preventDefault();
+  const seed = $(this).find('[name=game]').val();
+  const spy = $(this).find('[name=spy]').is(":checked");
+
+  if (spy) {
+    $board.addClass(SPYMASTER)
+  } else {
+    $board.removeClass(SPYMASTER)
+  }
+  if (seed) {
+    createGame(seed);
+    $('.js-mobile-form').hide()
+    $('.mobile-rotate').show()
+  }
+});
+
+$(document).on('click', '.js-change-game', function() {
+  $('.js-mobile-form').show()
+   $('.mobile-rotate').hide()
+});
+
+
 $spymaster.on('click', function (){
   $board.toggleClass(SPYMASTER)
 });
 
 $reset.on('click', function(){
-  createGame();
+  const seed = $seed.val();
+  createGame(seed);
 });
 
 function updateScore() {
@@ -98,7 +122,8 @@ $seed.on('keyup', function(e) {
   var keyCode = e.keyCode || e.which;
   if (keyCode == '13') {
     // Enter pressed
-    createGame();
+    const seed = $seed.val();
+    createGame(seed);
     return false;
   }
 });

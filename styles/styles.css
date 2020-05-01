@@ -6,7 +6,9 @@ a:visited {color: #263238}   /* visited link */
 	border: 2px solid #01579b;
 }     /* mouse over link */
 a:active {color: #263238}    /* selected link */
-
+.hidden {
+	display:none;
+}
 html {
 	font-family : Helvetica Neue, Helvetica, Arial, sans-serif;
 }
@@ -176,10 +178,10 @@ button, input, span#first {
 
 }
 
-#redScore{
+.redScore{
 	color: #ff8a65;
 }
-#blueScore{
+.blueScore{
 	color: #26a69a;
 }
 .score {
@@ -194,3 +196,108 @@ button, input, span#first {
 	margin-left: 30px;
 	font-weight: 500;
 }
+.mobile-form {
+	display: none;
+}
+
+
+@media only screen and (max-width: 900px) {
+	body {
+		padding: 0;
+		margin: 0;
+	}
+	#board div.word {
+		border : none; /*#e65100*/
+		border-radius : 0;
+		width : 20%;
+		height : 20%;
+		box-shadow: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	#board {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		position : absolute;
+		left : 0;
+		right : 0;
+		height : 100%;
+		top : 0;
+		font-size : 3vw;
+	}
+	#header {
+		display: none;
+	}
+
+	@media (orientation: portrait) {
+		body {
+			background-color: #fff9c4;
+		}
+		#board {
+			display: none;
+		}
+		.mobile-form {
+			padding: 20px;
+
+			display: block;
+			position: absolute;
+			width: 95%;
+			height: 95%;
+		}
+		.mobile-form input {
+			width: 200px;
+			height: 40px;
+		}
+		.mobile-form label {
+			display: inline;
+			height: 40px;
+			margin-right: 20px;
+		}
+		.mobile-form .form-section {
+			margin: 20px 0;
+		}
+		.mobile-form .mobile-submit {
+			background-color: #01579b;
+			border-radius : 5px;
+			width: 80%;
+			color: white;
+		}
+		.mobile-rotate {
+			text-align: center;
+			padding: 20px;
+		}
+		.mobile-rotate .rotate-icon {
+			display: block;
+			font-size: 5em;
+
+			margin: 0 auto;
+		}
+
+		.mobile-rotate .team-name,  .mobile-rotate .score{
+			font-size: 4vw;
+			width: 50%;
+			text-align: center;
+			margin: 10px auto;
+		}
+		.mobile-rotate .score {
+			font-size: 8vw;
+		}
+
+		.mobile-rotate .change-game {
+			background-color: #01579b;
+			border-radius : 5px;
+			margin: 10px auto;
+/*			bottom: 20px;
+			right: 20px;*/
+			margin-top: 50px;
+			color: white;
+			height: 40px;
+		}
+
+	}
+}
+
+
+
