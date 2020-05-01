@@ -72,6 +72,11 @@ button, input, span#first {
 #board .word.assassin-square.selected, #board.spy-master .word.assassin-square {
 	background-color: #d50000;
 }
+#board .word.assassin-square.selected a, #board.spy-master .word.assassin-square a{
+	color: white;
+}
+
+
 
 #board {
 	box-sizing : border-box;
