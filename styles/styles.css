@@ -279,6 +279,7 @@ button, input, span#first {
 		.mobile-rotate .rotate-icon {
 			display: block;
 			font-size: 5em;
+			color: #26a69a;
 
 			margin: 0 auto;
 		}
@@ -294,10 +295,10 @@ button, input, span#first {
 		}
 
 		.mobile-rotate .change-game {
-			background-color: #26a69a;
+			background-color: #cfd8dc;
 			border-radius : 5px;
 			margin: 10px auto;
-			color: white;
+			color: #37474f;
 			padding: 20px;
 		}
 
