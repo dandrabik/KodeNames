@@ -218,7 +218,7 @@ button, input, span#first {
 		body.js-form-view {
 			background-color: #e0f2f1;
 		}
-		.js-form-view #board {
+		#board {
 			display: none;
 		}
 		.js-form-view .mobile-form {
@@ -259,9 +259,6 @@ button, input, span#first {
 }
 
 @media only screen and (max-width: 900px) and (orientation: portrait)   {
-		#board {
-			display: none;
-		}
 		.mobile-form {
 			margin: 0 auto;
 			padding: 20px auto;
