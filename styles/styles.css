@@ -214,42 +214,41 @@ button, input, span#first {
 	}
 }
 
-@media only screen and (max-width: 900px) and (orientation: portrait) {
-		body {
+@media only screen and (max-width: 900px)  {
+		body.js-form-view {
 			background-color: #e0f2f1;
 		}
 		#board {
 			display: none;
 		}
-		.mobile-form {
+		.js-form-view .mobile-form {
 			margin: 0 auto;
 			padding: 20px auto;
 			display: block;
 			text-align: center;
-
 		}
-		.mobile-form input.mobile-text-field {
+		.js-form-view .mobile-form input.mobile-text-field {
 			width: 200px;
 			height: 50px;
 			margin: 10px auto;
 			display: block;
 			font: 6vw;
 		}
-		.mobile-form input.mobile-checkbox {
+		.js-form-view .mobile-form input.mobile-checkbox {
 			width: 30px;
 			height: 30px;
 		}
-		.mobile-form label {
+		 .js-form-view .mobile-form label {
 			display: inline;
 			font-size: 5vw;
 			margin-right: 20px;
 			vertical-align: center;
 			padding-bottom: 5px;
 		}
-		.mobile-form .form-section {
+		.js-form-view .mobile-form .form-section {
 			margin: 20px 0;
 		}
-		.mobile-form .mobile-submit {
+		.js-form-view .mobile-form .mobile-submit {
 			background-color: #26a69a;
 			border-radius : 5px;
 			margin: 10px auto;
@@ -257,12 +256,20 @@ button, input, span#first {
 			padding: 20px;
 			width: 200px;
 		}
+}
+
+@media only screen and (max-width: 900px) and (orientation: portrait)   {
+		.mobile-form {
+			margin: 0 auto;
+			padding: 20px auto;
+			display: block;
+			text-align: center;
+		}
 		.mobile-rotate {
 			text-align: center;
 			padding: 30px;
 		}
 		.mobile-rotate .rotate-icon {
-			display: block;
 			font-size: 5em;
 			color: #26a69a;
 			margin: 0 auto;
@@ -286,7 +293,7 @@ button, input, span#first {
 			padding: 20px;
 		}
 
-	}
+}
 
 @media only screen and (max-width: 900px) and (orientation: landscape) {
 	#board div.word {
@@ -300,6 +307,7 @@ button, input, span#first {
 	}
 
 	#board {
+		display: block;
 		margin: 0;
 		padding: 0;
 		width: 99.9%;

@@ -16,6 +16,8 @@ const $redScore = $('.redScore')
 const $blueScore = $('.blueScore')
 const $reset =$('#reset')
 
+const MOBILE_FORM_VIEW = 'js-form-view';
+
 const ICONS = {
   [RED] : ['fa-user-secret'],
   [BLUE] : ['fa-user-secret'],
@@ -80,6 +82,7 @@ $(document).on('submit', '.js-mobile-form', function (event) {
   }
   if (seed) {
     createGame(seed);
+    $('body').removeClass(MOBILE_FORM_VIEW);
     $('.js-mobile-form').hide()
     $('.mobile-rotate').show()
     $('.js-game-number').html(seed)
@@ -87,6 +90,7 @@ $(document).on('submit', '.js-mobile-form', function (event) {
 });
 
 $(document).on('click', '.js-change-game', function() {
+  $('body').addClass(MOBILE_FORM_VIEW);
   $('.js-mobile-form').show()
    $('.mobile-rotate').hide()
 });
