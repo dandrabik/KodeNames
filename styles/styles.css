@@ -218,7 +218,7 @@ button, input, span#first {
 		body.js-form-view {
 			background-color: #e0f2f1;
 		}
-		#board {
+		.js-form-view #board {
 			display: none;
 		}
 		.js-form-view .mobile-form {
@@ -259,6 +259,9 @@ button, input, span#first {
 }
 
 @media only screen and (max-width: 900px) and (orientation: portrait)   {
+		#board {
+			display: none;
+		}
 		.mobile-form {
 			margin: 0 auto;
 			padding: 20px auto;
@@ -296,7 +299,7 @@ button, input, span#first {
 }
 
 @media only screen and (max-width: 900px) and (orientation: landscape) {
-	body:not(.js-form-view) #board div.word {
+	:not(.js-form-view) #board div.word {
 		border : none;
 		border-radius : 0;
 		width : 20%;
@@ -306,7 +309,7 @@ button, input, span#first {
 		padding: 0;
 	}
 
-	body:not(.js-form-view) #board {
+	:not(.js-form-view) #board {
 		display: block;
 		margin: 0;
 		padding: 0;
