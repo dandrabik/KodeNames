@@ -296,7 +296,7 @@ button, input, span#first {
 }
 
 @media only screen and (max-width: 900px) and (orientation: landscape) {
-	#board div.word {
+	body:not(.js-form-view) #board div.word {
 		border : none;
 		border-radius : 0;
 		width : 20%;
@@ -306,7 +306,7 @@ button, input, span#first {
 		padding: 0;
 	}
 
-	#board {
+	body:not(.js-form-view) #board {
 		display: block;
 		margin: 0;
 		padding: 0;
