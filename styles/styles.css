@@ -209,32 +209,12 @@ button, input, span#first {
 		padding: 0;
 		margin: 0;
 	}
-	#board div.word {
-		border : none;
-		border-radius : 0;
-		width : 20%;
-		height : 20%;
-		box-shadow: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	#board {
-		margin: 0;
-		padding: 0;
-		width: 99.9%;
-		position : absolute;
-		left : 0;
-		right : 0;
-		height : 100%;
-		top : 0;
-		font-size : 2.5vw;
-	}
 	#header {
 		display: none;
 	}
+}
 
-	@media (orientation: portrait) {
+@media only screen and (max-width: 900px) and (orientation: portrait) {
 		body {
 			background-color: #e0f2f1;
 		}
@@ -285,7 +265,6 @@ button, input, span#first {
 			display: block;
 			font-size: 5em;
 			color: #26a69a;
-
 			margin: 0 auto;
 		}
 
@@ -308,7 +287,27 @@ button, input, span#first {
 		}
 
 	}
+
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+	#board div.word {
+		border : none;
+		border-radius : 0;
+		width : 20%;
+		height : 20%;
+		box-shadow: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	#board {
+		margin: 0;
+		padding: 0;
+		width: 99.9%;
+		position : absolute;
+		left : 0;
+		right : 0;
+		height : 100%;
+		top : 0;
+		font-size : 2.5vw;
+	}
 }
-
-
-
